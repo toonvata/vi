@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../styles/ThaiElementAssessment.module.css';
-
+function App() {
 const ThaiElementAssessment = () => {
   const [answers, setAnswers] = useState({});
   const [symptoms, setSymptoms] = useState([]);
@@ -151,16 +151,16 @@ const ThaiElementAssessment = () => {
   };
 
    return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>แบบประเมินธาตุเด่นตามหลักการแพทย์แผนไทยจากคัมภีร์ธาตุวิวรรณ์</h1>
-      <p className={styles.subtitle}>โปรดตอบคำถามตามโดยเลือกตัวเลือกที่ตรงกับพฤติกรรมของท่านมากที่สุด</p>
+    <div className="container">
+      <h1 className="title">แบบประเมินธาตุเด่นตามหลักการแพทย์แผนไทยจากคัมภีร์ธาตุวิวรรณ์</h1>
+      <p className="subtitle">โปรดตอบคำถามตามโดยเลือกตัวเลือกที่ตรงกับพฤติกรรมของท่านมากที่สุด</p>
       
       <form onSubmit={handleSubmit}>
         {Object.entries(questions).map(([category, options]) => (
-          <div key={category} className={styles.questionGroup}>
-            <h3 className={styles.questionTitle}>{category}</h3>
+          <div key={category} className="question-group">
+            <h3 className="question-title">{category}</h3>
             {Object.entries(options).map(([element, description]) => (
-              <label key={element} className={styles.optionLabel}>
+              <label key={element} className="option-label">
                 <input
                   type="radio"
                   name={category}
@@ -174,13 +174,13 @@ const ThaiElementAssessment = () => {
           </div>
         ))}
 
-        <div className={styles.questionGroup}>
-          <h3 className={styles.questionTitle}>อาการทางคลินิก</h3>
+        <div className="question-group">
+          <h3 className="question-title">อาการทางคลินิก</h3>
           {Object.entries(clinicalSymptoms).map(([element, symptomList]) => (
             <div key={element}>
               <h4>{element}</h4>
               {symptomList.map(symptom => (
-                <label key={symptom} className={styles.optionLabel}>
+                <label key={symptom} className="option-label">
                   <input
                     type="checkbox"
                     value={symptom}
@@ -193,7 +193,7 @@ const ThaiElementAssessment = () => {
           ))}
         </div>
 
-        <button type="submit" className={styles.submitButton}>
+        <button type="submit" className="submit-button">
           ประเมินผล
         </button>
       </form>
@@ -227,6 +227,6 @@ const ThaiElementAssessment = () => {
       )}
     </div>
   );
-};
+}
 
-export default ThaiElementAssessment;
+export default App;
