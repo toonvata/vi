@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from '../styles/ThaiElementAssessment.module.css';
 
 const ThaiElementAssessment = () => {
   const [answers, setAnswers] = useState({});
@@ -149,52 +150,50 @@ const ThaiElementAssessment = () => {
     });
   };
 
-  return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-1">แบบประเมินธาตุเด่นตามหลักการแพทย์แผนไทยจากคัมภีร์ธาตุวิวรรณ์</h1>
-      <p className="text-blue-600 text-sm mb-4">โปรดตอบคำถามตามโดยเลือกตัวเลือกที่ตรงกับพฤติกรรมของท่านมากที่สุด</p>
+   return (
+    <div className={styles.container}>
+      <h1 className={styles.title}>แบบประเมินธาตุเด่นตามหลักการแพทย์แผนไทยจากคัมภีร์ธาตุวิวรรณ์</h1>
+      <p className={styles.subtitle}>โปรดตอบคำถามตามโดยเลือกตัวเลือกที่ตรงกับพฤติกรรมของท่านมากที่สุด</p>
       
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit}>
         {Object.entries(questions).map(([category, options]) => (
-          <div key={category} className="space-y-2">
-            <h3 className="font-semibold">{category}</h3>
+          <div key={category} className={styles.questionGroup}>
+            <h3 className={styles.questionTitle}>{category}</h3>
             {Object.entries(options).map(([element, description]) => (
-              <label key={element} className="flex items-start space-x-2">
+              <label key={element} className={styles.optionLabel}>
                 <input
                   type="radio"
                   name={category}
                   value={element}
                   onChange={() => handleAnswerChange(category, element)}
                   required
-                  className="mt-1"
                 />
-                <span>{description}</span>
+                {description}
               </label>
             ))}
           </div>
         ))}
 
-        <div className="space-y-2">
-          <h3 className="font-semibold">อาการทางคลินิก</h3>
+        <div className={styles.questionGroup}>
+          <h3 className={styles.questionTitle}>อาการทางคลินิก</h3>
           {Object.entries(clinicalSymptoms).map(([element, symptomList]) => (
-            <div key={element} className="space-y-1">
-              <h4 className="font-medium">{element}</h4>
+            <div key={element}>
+              <h4>{element}</h4>
               {symptomList.map(symptom => (
-                <label key={symptom} className="flex items-center space-x-2">
+                <label key={symptom} className={styles.optionLabel}>
                   <input
                     type="checkbox"
                     value={symptom}
                     onChange={() => handleSymptomChange(symptom)}
-                    className="form-checkbox"
                   />
-                  <span>{symptom}</span>
+                  {symptom}
                 </label>
               ))}
             </div>
           ))}
         </div>
 
-        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+        <button type="submit" className={styles.submitButton}>
           ประเมินผล
         </button>
       </form>
