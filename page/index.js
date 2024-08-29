@@ -150,12 +150,12 @@ const ThaiElementAssessment = () => {
     });
   };
 
-   return (
+  return (
     <div className="container">
       <h1 className="title">แบบประเมินธาตุเด่นตามหลักการแพทย์แผนไทยจากคัมภีร์ธาตุวิวรรณ์</h1>
       <p className="subtitle">โปรดตอบคำถามตามโดยเลือกตัวเลือกที่ตรงกับพฤติกรรมของท่านมากที่สุด</p>
-      
-      <form onSubmit={handleSubmit}>
+
+      <form onSubmit={handleSubmit} className="assessment-form">
         {Object.entries(questions).map(([category, options]) => (
           <div key={category} className="question-group">
             <h3 className="question-title">{category}</h3>
@@ -167,8 +167,9 @@ const ThaiElementAssessment = () => {
                   value={element}
                   onChange={() => handleAnswerChange(category, element)}
                   required
+                  className="radio-input"
                 />
-                {description}
+                <span className="option-text">{description}</span>
               </label>
             ))}
           </div>
@@ -177,16 +178,17 @@ const ThaiElementAssessment = () => {
         <div className="question-group">
           <h3 className="question-title">อาการทางคลินิก</h3>
           {Object.entries(clinicalSymptoms).map(([element, symptomList]) => (
-            <div key={element}>
-              <h4>{element}</h4>
+            <div key={element} className="symptom-group">
+              <h4 className="symptom-title">{element}</h4>
               {symptomList.map(symptom => (
                 <label key={symptom} className="option-label">
                   <input
                     type="checkbox"
                     value={symptom}
                     onChange={() => handleSymptomChange(symptom)}
+                    className="checkbox-input"
                   />
-                  {symptom}
+                  <span className="option-text">{symptom}</span>
                 </label>
               ))}
             </div>
@@ -199,29 +201,29 @@ const ThaiElementAssessment = () => {
       </form>
 
       {results && (
-        <div className="mt-8 p-4 border rounded">
-          <h2 className="text-xl font-bold mb-4">ผลการประเมิน</h2>
-          <p><strong>ธาตุเด่นของคุณคือ:</strong> {results.dominant_element}</p>
-          <div>
+        <div className="results">
+          <h2 className="results-title">ผลการประเมิน</h2>
+          <p><strong>ธาตุเด่นของคุณคือ:</strong> {results.dominantElement}</p>
+          <div className="scores">
             <strong>คะแนนของแต่ละธาตุ:</strong>
-            <ul className="list-disc list-inside">
+            <ul>
               {Object.entries(results.scores).map(([element, score]) => (
                 <li key={element}>{element}: {score}</li>
               ))}
             </ul>
           </div>
-          <div>
+          <div className="symptoms">
             <strong>อาการทางคลินิกที่พบ:</strong>
-            <ul className="list-disc list-inside">
-              {results.user_symptoms.length > 0 ? (
-                results.user_symptoms.map(symptom => <li key={symptom}>{symptom}</li>)
+            <ul>
+              {results.userSymptoms.length > 0 ? (
+                results.userSymptoms.map(symptom => <li key={symptom}>{symptom}</li>)
               ) : (
                 <li>ไม่พบอาการทางคลินิกที่เลือก</li>
               )}
             </ul>
           </div>
           <p><strong>ค่าความเชื่อมโยงระหว่างธาตุเด่นและอาการทางคลินิก:</strong> {results.correlation.toFixed(2)}</p>
-          <p><strong>การประเมินความเสี่ยง:</strong> {results.risk_level}</p>
+          <p><strong>การประเมินความเสี่ยง:</strong> {results.riskLevel}</p>
           <p><strong>คำอธิบายเพิ่มเติม:</strong> {results.explanation}</p>
         </div>
       )}
