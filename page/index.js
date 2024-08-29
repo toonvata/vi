@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from '../styles/ThaiElementAssessment.module.css';
+import './App.css';
 function App() {
 const ThaiElementAssessment = () => {
   const [answers, setAnswers] = useState({});
